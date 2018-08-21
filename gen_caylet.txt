@@ -1,0 +1,32 @@
+p=5
+S = SL(2,p)
+w=matrix([[0,1],[-1,0]])
+winv=matrix([[0,-1],[1,0]])
+g11=matrix([[1,1],[0,1]])
+g12=matrix([[1,-1],[0,1]])
+g1=[w,winv,g11,g12]
+g21=matrix([[1,(p^2+1)/2],[0,1]])
+g22=g21.inverse()#matrix([[1,(p-1)/2],[0,1]])
+g2=[w,winv,g11,g12]
+g3=[w,winv,w*matrix([[1,0],[1,1]]),matrix([[1,0],[-1,1]])*winv]
+g4=[matrix([[1,2],[0,1]]),matrix([[1,-2],[0,1]]),matrix([[1,0],[-2,1]]),matrix([[1,0],[2,1]])]
+d={}
+#dl={}
+for i in range(len(S)):
+    #dl[S[i]]=i
+    d[i]=[]
+S_L=[]
+for i in range(len(S)):
+    S_L.append(S[i].list())
+    
+for i in range(len(S)):
+    for g in g4:
+        temp=(g*S[i]).list()
+        tempc=[[temp[0],temp[1]],[temp[2],temp[3]]]
+        for j in range(len(S)):
+            if tempc==S_L[j]:
+                d[i].append(j)
+                
+cayley_g1=Graph(d)
+spec_list=cayley_g1.spectrum()
+print(spec_list)
